@@ -1,0 +1,120 @@
+package codigo;
+
+import java_cup.runtime.Symbol;
+
+parser code
+{:
+    private Symbol s;
+    
+    public void syntax_error(Symbol s){
+        this.s = s;
+        FrmPrincipal.errores.add("Error sintactico en linea: " + (s.right + 1) + " lexema: " + s.value);
+    }
+
+    public Symbol getS(){
+        return this.s;
+    }
+:};
+
+terminal Atlas, Comillas, Int, Char, Logic, Float, Double, Cadena, Device, Condition, Else, Do, Until, Option, Ventilate, Admit,
+         EmptyRoom, Dispense, Distance, DeviceControl, DriverLights, OpenDoor, RegisterA, Exit, Igual, Aritmetico, Op_logico,
+         Op_relacional, Op_atribucion, Op_incremento, Op_booleano, Parentesis_a, Parentesis_c, Llave_a, Llave_c, Corchete_a,
+         Corchete_c, Start, P_coma, Dos_puntos, Coma, Identificador, Numero, Numero_Dec, Texto, Caracter, End, Declare, As, Case, Begin;
+non terminal INICIO, SENTENCIA, DECLARACION, CONDITION, CONDITION_ELSE, UNTIL, DO_UNTIL, OPTION, SENTENCIA_BOOLEANA, CASE, SENTENCIA_ARITMETICA, INCREMENTO,
+             VENTILATE, ADMIT, EMPTYROOM, DISPENSE, DISTANCE, DEVICECONTROL, DRIVERLIGHTS, OPENDOOR, REGISTERA, DECLARACION_DISPOSITIVO, DECLARACION_DC,
+             OP_ARITMETICA, ATRIBUCION, TIPOS_DEC, DEC_INI, CAMPO_NUM, CAMPO_DEC, CAMPO_TEXTO;
+
+start with INICIO;
+
+INICIO ::= Start Identificador Llave_a Atlas Begin Parentesis_a Parentesis_c Llave_a SENTENCIA Llave_c Llave_c End
+;
+SENTENCIA ::= SENTENCIA DECLARACION |
+    DECLARACION |
+    SENTENCIA SENTENCIA_ARITMETICA |
+    SENTENCIA_ARITMETICA |
+    SENTENCIA CONDITION | 
+    CONDITION |
+    SENTENCIA CONDITION_ELSE |
+    CONDITION_ELSE |
+    SENTENCIA UNTIL |
+    UNTIL |
+    SENTENCIA DO_UNTIL |
+    DO_UNTIL |
+    SENTENCIA VENTILATE |
+    VENTILATE |
+    SENTENCIA ADMIT |
+    ADMIT |
+    SENTENCIA EMPTYROOM |
+    EMPTYROOM |
+    SENTENCIA DISPENSE |
+    DISPENSE |
+    SENTENCIA DISTANCE |
+    DISTANCE |
+    SENTENCIA DEVICECONTROL |
+    DEVICECONTROL |
+    SENTENCIA DRIVERLIGHTS |
+    DRIVERLIGHTS |
+    SENTENCIA OPENDOOR |
+    OPENDOOR |
+    SENTENCIA REGISTERA |
+    REGISTERA |
+    SENTENCIA Exit |
+    Exit 
+;
+DECLARACION ::= Identificador Declare As TIPOS_DEC | Identificador Declare As DEC_INI
+;
+
+TIPOS_DEC ::= Int P_coma | Float P_coma | Double P_coma | Cadena P_coma | Char P_coma | Logic P_coma
+;
+DEC_INI ::= Int Igual Numero P_coma | Float Igual Numero P_coma | Float Igual Numero_Dec P_coma |
+            Double Igual Numero P_coma | Double Igual Numero_Dec P_coma | Cadena Igual Texto P_coma |
+            Char Igual Caracter P_coma | Cadena Igual Comillas Comillas P_coma | Logic Igual Op_booleano P_coma
+;
+
+SENTENCIA_ARITMETICA ::= INCREMENTO | OP_ARITMETICA | ATRIBUCION
+;
+INCREMENTO ::= Op_incremento Identificador | Identificador Op_incremento
+;
+OP_ARITMETICA ::= Identificador Aritmetico Identificador P_coma | Identificador Aritmetico OP_ARITMETICA Identificador P_coma
+;
+ATRIBUCION ::= Identificador Op_atribucion CAMPO_DEC | Identificador Op_atribucion Texto
+               
+;
+CONDITION ::= Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c
+;
+SENTENCIA_BOOLEANA ::= Op_booleano | Identificador Op_relacional Op_booleano |
+                       Identificador Op_relacional Numero | Identificador Op_relacional Identificador |
+                       Op_logico SENTENCIA_BOOLEANA
+;
+CONDITION_ELSE ::= Condition Parentesis_a SENTENCIA_BOOLEANA Parentesis_c Llave_a SENTENCIA Llave_c Else Llave_a SENTENCIA_BOOLEANA Llave_c
+;
+
+VENTILATE ::= Ventilate Parentesis_a CAMPO_NUM Coma SENTENCIA_BOOLEANA Coma SENTENCIA_BOOLEANA Coma SENTENCIA_BOOLEANA Parentesis_c P_coma
+;
+CAMPO_NUM ::= Numero | Identificador
+;
+CAMPO_DEC ::= Numero_Dec | Identificador | Numero
+;
+CAMPO_TEXTO ::= Cadena
+;
+ADMIT ::= Admit Parentesis_a SENTENCIA_BOOLEANA Coma CAMPO_NUM Coma CAMPO_DEC Parentesis_c P_coma
+;
+EMPTYROOM ::= EmptyRoom Parentesis_a SENTENCIA_BOOLEANA Coma CAMPO_NUM Coma SENTENCIA_BOOLEANA Coma SENTENCIA_BOOLEANA Parentesis_c P_coma
+;
+DISPENSE ::= Dispense Parentesis_a SENTENCIA_BOOLEANA Coma CAMPO_NUM Coma SENTENCIA_BOOLEANA Parentesis_c P_coma
+;
+DISTANCE ::= Distance Parentesis_a Device Corchete_a DECLARACION_DISPOSITIVO Corchete_c Parentesis_c P_coma
+;
+DECLARACION_DISPOSITIVO ::= Parentesis_a CAMPO_TEXTO Coma CAMPO_DEC Coma CAMPO_DEC Parentesis_c Coma DECLARACION_DISPOSITIVO |
+                            Parentesis_a CAMPO_TEXTO Coma CAMPO_DEC Coma CAMPO_DEC Parentesis_c
+;
+DEVICECONTROL ::= DeviceControl Parentesis_a SENTENCIA_BOOLEANA Coma Corchete_a DECLARACION_DC Corchete_c P_coma
+;
+DECLARACION_DC ::= Identificador Coma DECLARACION_DC | Identificador | CAMPO_TEXTO Coma DECLARACION_DC
+;
+DRIVERLIGHTS ::= DriverLights Parentesis_a CAMPO_DEC Coma SENTENCIA_BOOLEANA Parentesis_c P_coma 
+;
+OPENDOOR ::= OpenDoor Parentesis_a CAMPO_NUM Coma SENTENCIA_BOOLEANA Parentesis_c P_coma
+;
+REGISTERA ::= RegisterA Parentesis_a CAMPO_TEXTO Parentesis_c P_coma
+;

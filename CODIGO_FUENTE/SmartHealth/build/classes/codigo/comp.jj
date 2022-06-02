@@ -1,0 +1,102 @@
+PARSER_BEGIN(comp)
+import java.io.*;
+class comp 
+{
+	public static void main( String[] args )throws ParseException, Exception
+	{
+		try
+		{		
+     		comp analizador = new comp( System.in ) ;
+			analizador.Programa();
+			System.out.println("\tAnalizador ha terminado.");			
+		}
+		catch(ParseException e)
+		{
+			System.out.println(e.getMessage());
+			System.out.println("\tAnalizador ha terminado.");
+		}
+	}
+}
+PARSER_END(comp)
+
+TOKEN : 
+{ 
+	  <ASIGNACION : "="> //1
+	| <PLUS : "+" >  //2
+	| <MINUS:"-"> //3
+	| <MULTIPLY:"*">  //4
+	| <DIVIDE:"/"> //5
+	| <INCR: "++" > //6
+	| <DECR: "--" > //7
+	
+}
+TOKEN:
+{
+	  <PUBLIC: "public"> //8
+	| <PRIVATE: "private"> //9
+	| <STATIC: "static"> //10
+	| <VOID: "void"> //11
+	| <MAIN: "public static void Main()"> //12
+	| <PROGRAMA: "Programa" >  //13
+	| <IF: "ien" > //14
+	| <ELSE:"iotro" > //15
+	| <ELSEIF:"ien otro" > //16
+	| <FOR:"irepetir" > //17
+	| <SWITCH:"ialternativa" > //18
+	| <CASE:"iopcion" > //19
+	| <BREAK:"itermina" > //20
+	| <DEFAUL:"ipredef" > //21
+	| <DO:"ia" > //22
+	| <WHILE:"iespera" > //23
+	| <WRITE:"iescribir" > //24
+	| <READ:"ileer" > //25
+}
+TOKEN:
+{
+      <LPAREN: "(" > //26
+	| <RPAREN: ")" > //27
+	| <LBRACE: "{" > //28
+	| <RBRACE: "}" > //29
+	| <LBRACKET: "[" > //30
+	| <RBRACKET: "]" > //31
+	| <SEMICOLON: ";" > //32
+	| <COMMA: "," > //33
+	| <DOT: "." > //34
+	| <DOUBLECOMMA: "\""> //35
+}
+TOKEN:
+{
+	  <EQ: "==" > //36
+	| <LE: "<=" > //37
+	| <MN: "<" > //38
+	| <GE: ">=" > //39
+	| <GR: ">" > //40
+	| <NE: "!=" > //41
+	| <OR: "||" > //42
+	| <AND: "&&"> //43
+}
+
+TOKEN:
+{
+	  <INT:"inum"> //44
+	| <DEC: "idec"> //45
+	| <CHR: "ichr"> //46
+	| <STR: "istr"> //47
+	| <NUMBER : (["0"-"9"])+>  //48
+	| <IDENTIFIER : ["a"-"z","A"-"Z"](["a"-"z","A"-"Z","0"-"9","_"])*>  //49
+	| <DECIMAL : (["0"-"9"])+["."](["0"-"9"])+ > //50
+	| <CADENA : <DOUBLECOMMA>["a"-"z","A"-"Z","0"-"9"," "](["a"-"z","A"-"Z","0"-"9"," ",":",";","."])*<DOUBLECOMMA>> //51
+	| <CARAC : "'"["a"-"z","A"-"Z","0"-"9"]"'" >//52 
+	| <DOUBLEPOINT : ":"> //53
+}
+
+SKIP : 
+{ 
+	" "|"\n" | "\r" | "\r\n" | "\t"
+}
+
+void Programa() :
+{}
+{
+	<PROGRAMA><IDENTIFIER><LBRACE>Bloque()<RBRACE><EOF>	
+}

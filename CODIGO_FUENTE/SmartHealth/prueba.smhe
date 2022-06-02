@@ -1,0 +1,14 @@
+start prueba{
+Atlas begin(){
+tiempo Declare As int;
+tiempo = 10;
+//Encender luces
+//Registrar entrada
+//Dispensar gel
+//isEmptyRoom
+//Apagar las luces
+//Abrir puertas y ventanas
+//Ventilar
+//Cerrar puertas y ventanas
+}
+}End

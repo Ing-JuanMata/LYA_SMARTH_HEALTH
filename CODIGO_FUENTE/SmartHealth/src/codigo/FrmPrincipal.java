@@ -23,6 +23,7 @@ import static javax.swing.JFileChooser.APPROVE_OPTION;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.JTextArea;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.filechooser.FileFilter;
@@ -42,7 +43,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private ArrayList<TextColor> colores = new ArrayList<>();
 
     private final UndoManager administradorCambios;
-
+    
+    Semantic analizadorSemantico;
+    
+    /*private void analisisSemantico(){
+        
+        analizadorSemantico = new Semantic (tokens, this, archivo);
+        
+    }*/
+    
     public FrmPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -115,6 +124,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         txtGramaticas = new javax.swing.JTextPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnlGraUsa = new javax.swing.JTextPane();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -480,6 +492,23 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         pestañasTablas.addTab("Gramaticas Usadas", jScrollPane1);
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane5.setViewportView(jTable1);
+
+        jTabbedPane1.addTab("tab1", jScrollPane5);
+
+        pestañasTablas.addTab("Analisis Semántico", jTabbedPane1);
+
         splitPanelContenedor.setRightComponent(pestañasTablas);
 
         jSplitPane1.setTopComponent(splitPanelContenedor);
@@ -804,6 +833,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void pestañasTablasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pestañasTablasMousePressed
         llenadoTEstatico(ckbTablaEstatica.getSelectedIndex());
     }//GEN-LAST:event_pestañasTablasMousePressed
+
+    public static void setTxtError(JTextArea txtError) {
+        FrmPrincipal.txtError = txtError;
+    }
 
     private void colorear() throws IOException {
         colores.clear();
@@ -1200,10 +1233,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblAutomata;
     private javax.swing.JLabel lblConsola;
     private javax.swing.JMenuItem mnuAbrir;

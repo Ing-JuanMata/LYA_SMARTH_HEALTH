@@ -6,6 +6,7 @@ deviceControl(Dispositivo,true,[(VOL=20)]);
 driverLights(1000, [(2,2)]); 
 valor Declare As int;
 valor = 10;
+valor Declare As int;
 emptyRoom(true, 3, true,true);//Sanitizar, 3 minutos, luces apagadas para ahorrar energía, puerta cerrada
 ventilate(valor,true,true,true); //Tiempo en minutos que se ejecutará la función, eliminador de bacterias, abrir puertas,vnt
 registerA("19400584");//Borrar comillas para demostración de validación

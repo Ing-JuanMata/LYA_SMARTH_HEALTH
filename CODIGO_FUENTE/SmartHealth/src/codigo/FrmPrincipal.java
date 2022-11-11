@@ -127,6 +127,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane5 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        txtCuad = new javax.swing.JTextArea();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu5 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -508,6 +511,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jTabbedPane1.addTab("tab1", jScrollPane5);
 
         pestañasTablas.addTab("Analisis Semántico", jTabbedPane1);
+
+        txtCuad.setColumns(20);
+        txtCuad.setRows(5);
+        txtCuad.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCuadMouseClicked(evt);
+            }
+        });
+        jScrollPane6.setViewportView(txtCuad);
+
+        jTabbedPane2.addTab("tab1", jScrollPane6);
+
+        pestañasTablas.addTab("Cuadruplos", jTabbedPane2);
 
         splitPanelContenedor.setRightComponent(pestañasTablas);
 
@@ -929,6 +945,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtEntradaKeyReleased
 
+    
+    CuadrupleGenerator cg = new CuadrupleGenerator();
+    private void txtCuadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCuadMouseClicked
+        cg.genarateCuadruples();
+        txtCuad.setText(cg.retOutput());
+    }//GEN-LAST:event_txtCuadMouseClicked
+
     // Funciones
     //Pendiente
     private void nuevoArchivo() {
@@ -1234,11 +1257,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblAutomata;
     private javax.swing.JLabel lblConsola;
@@ -1266,6 +1291,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JTable tablaDinamica;
     private javax.swing.JTable tablaEstatica;
     public static javax.swing.JTable tblAnalisis;
+    private javax.swing.JTextArea txtCuad;
     public static javax.swing.JTextPane txtEntrada;
     public static javax.swing.JTextArea txtError;
     public static javax.swing.JTextPane txtGramaticas;
